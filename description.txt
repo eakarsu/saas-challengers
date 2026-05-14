@@ -1,0 +1,14 @@
+SaaS Challengers
+By Jared Friedman
+
+Everyone's talking about how AI coding means the end of SaaS. Investors have wiped trillions off software market caps.
+
+Well, that might be bad news for incumbents, but it's good news for startups. If the incumbents really are this vulnerable, it should be the biggest startup opportunity in a decade. So, go build a challenger!
+
+The SaaS model won because custom software was too expensive. A five-person startup couldn't outbuild Salesforce. But AI has collapsed the cost of producing software by 10-100x, and that changes everything. The moat that once protected legacy SaaS — millions of lines of code, built over decades — is gone.
+
+There's a spectrum of ways to attack this. The simplest: clone an existing product and sell it for one-tenth the price. But you can go much further. You can build a product that's AI-native from the ground up. Not a chatbot bolted onto a 2010 UI, but software that fundamentally rethinks the workflow. You can take ten SaaS point solutions and bundle them into a single suite. You can build an open-source replacement for a product that costs $50K per seat and give it away, then monetize through services and hosting.
+
+Most people drawn to this idea start with simple targets like project management tools. We'd encourage you to think bigger. Go after the products that seem invulnerable: chip design software, ERPs, industrial control systems, supply chain management. The giant, 10-million-line codebases that have been untouchable for decades.
+
+The last generation of great software companies was built by replacing on-premise with cloud. The next generation will be built by replacing legacy SaaS with AI-native software.
