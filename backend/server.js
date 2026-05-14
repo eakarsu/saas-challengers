@@ -36,3 +36,11 @@ app.use('/api/cf-plan-from-brief', require('./routes/cf-plan-from-brief'));
 app.use('/api/cf-auto-retros', require('./routes/cf-auto-retros'));
 app.use('/api/cf-code-aware-similarity', require('./routes/cf-code-aware-similarity'));
 app.use('/api/cf-github-sync', require('./routes/cf-github-sync'));
+
+// SaaS Challengers domain routes (added 2026-05-14)
+app.use('/api/incumbents', require('./routes/incumbents'));
+app.use('/api/challengers', require('./routes/challengers'));
+app.use('/api/displacement', require('./routes/displacement'));
+app.use('/api/switching', require('./routes/switching'));
+app.use('/api/pricing', require('./routes/pricing'));
+app.use('/api/moats', require('./routes/moats'));
