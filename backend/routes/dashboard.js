@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const pool = require('../db');
-const verifyToken = require('../middleware/auth');
+const { verifyToken } = require('../middleware/auth');
 
 // GET /api/dashboard/stats - aggregate KPIs and recent activity for landing dashboard
 router.get('/stats', verifyToken, async (req, res) => {
