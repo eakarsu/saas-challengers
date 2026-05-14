@@ -30,14 +30,12 @@ echo "Installing frontend dependencies..."
 cd frontend && npm install && cd ..
 
 echo "Starting backend on port 3012..."
-cd backend && node server.js &
+(cd backend && node server.js) &
 BACKEND_PID=$!
-cd ..
 
 echo "Starting frontend on port 5176..."
-cd frontend && npm run dev &
+(cd frontend && npm run dev) &
 FRONTEND_PID=$!
-cd ..
 
 echo ""
 echo "Momentum is running!"
