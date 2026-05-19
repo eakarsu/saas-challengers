@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const verifyToken = require('../middleware/auth');
+const verifyToken = require("../middleware/auth");
 
 async function callAI(userPrompt, systemPrompt = '') {
   if (!process.env.OPENROUTER_API_KEY || process.env.OPENROUTER_API_KEY === 'your_openrouter_api_key_here') {

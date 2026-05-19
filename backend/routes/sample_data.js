@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const pool = require('../db');
-const verifyToken = require('../middleware/auth');
+const verifyToken = require("../middleware/auth");
 
 // Domain-realistic sample data for a SaaS PM tool (Momentum)
 

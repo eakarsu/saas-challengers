@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const pool = require('../db');
-const verifyToken = require('../middleware/auth');
+const verifyToken = require("../middleware/auth");
 
 function csvEscape(v) {
   if (v === null || v === undefined) return '';
