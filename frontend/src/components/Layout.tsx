@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Layers, FolderKanban, Bug, Zap, Users, MessageSquare, Tag, Sparkles, LogOut, Search, ScrollText, Database, LayoutDashboard, Building2, Swords, AlertOctagon, CircleDollarSign, Shield } from 'lucide-react';
+import { Layers, FolderKanban, Bug, Zap, Users, MessageSquare, Tag, Sparkles, LogOut, Search, ScrollText, Database, LayoutDashboard, Building2, Swords, AlertOctagon, CircleDollarSign, Shield, Eye } from 'lucide-react';
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -9,6 +9,7 @@ const navItems = [
   { to: '/switching', label: 'Switching Costs', icon: AlertOctagon },
   { to: '/pricing', label: 'Pricing Models', icon: CircleDollarSign },
   { to: '/moats', label: 'Moats', icon: Shield },
+  { to: '/custom-views', label: 'Challenger Views', icon: Eye },
   { to: '/projects', label: 'Projects', icon: FolderKanban },
   { to: '/issues', label: 'Issues', icon: Bug },
   { to: '/sprints', label: 'Sprints', icon: Zap },

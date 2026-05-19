@@ -18,6 +18,7 @@ import DisplacementPage from './pages/DisplacementPage';
 import SwitchingCostsPage from './pages/SwitchingCostsPage';
 import PricingModelsPage from './pages/PricingModelsPage';
 import MoatsPage from './pages/MoatsPage';
+import CustomViewsPage from './pages/CustomViewsPage';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   return localStorage.getItem('token') ? <>{children}</> : <Navigate to="/login" />;
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="switching" element={<SwitchingCostsPage />} />
           <Route path="pricing" element={<PricingModelsPage />} />
           <Route path="moats" element={<MoatsPage />} />
+          <Route path="custom-views" element={<CustomViewsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

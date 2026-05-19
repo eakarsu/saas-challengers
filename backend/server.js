@@ -44,3 +44,10 @@ app.use('/api/displacement', require('./routes/displacement'));
 app.use('/api/switching', require('./routes/switching'));
 app.use('/api/pricing', require('./routes/pricing'));
 app.use('/api/moats', require('./routes/moats'));
+
+// Custom Views (Challenger Views) — mount BEFORE 404 handler
+app.use('/api/custom-views', require('./routes/customViews'));
+app.get('/api/health', (_req, res) => res.json({ ok: true, ts: new Date().toISOString() }));
+
+// 404 fallback
+app.use('/api', (_req, res) => res.status(404).json({ error: 'not found' }));
