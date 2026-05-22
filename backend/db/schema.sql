@@ -175,3 +175,14 @@ CREATE TABLE IF NOT EXISTS moats (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 CREATE INDEX IF NOT EXISTS idx_moats_challenger ON moats(challenger_id);
+
+-- Gap/Cf feature execution history (auto-scaffolded by gap-*/cf-* routes).
+CREATE TABLE IF NOT EXISTS gap_features (
+  id SERIAL PRIMARY KEY,
+  feature_slug TEXT NOT NULL,
+  user_id INTEGER,
+  input JSONB,
+  output TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_gap_features_slug ON gap_features(feature_slug, created_at DESC);

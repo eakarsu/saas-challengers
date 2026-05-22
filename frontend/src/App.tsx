@@ -20,6 +20,28 @@ import PricingModelsPage from './pages/PricingModelsPage';
 import MoatsPage from './pages/MoatsPage';
 import CustomViewsPage from './pages/CustomViewsPage';
 
+import CodexCustomVizFeature from './pages/CodexCustomVizFeature';
+import CodexOperationsFeature from './pages/CodexOperationsFeature';
+
+import TimelineView from './pages/TimelineView';
+
+import GapAgentExecutor from './pages/GapAgentExecutor';
+import GapAutoPrFromIssue from './pages/GapAutoPrFromIssue';
+import GapCustomerPortal from './pages/GapCustomerPortal';
+import GapCycleTimeExplainer from './pages/GapCycleTimeExplainer';
+import GapDependencyGraph from './pages/GapDependencyGraph';
+import GapGitIntegration from './pages/GapGitIntegration';
+import GapKeyboardPalette from './pages/GapKeyboardPalette';
+import GapSsoIntegration from './pages/GapSsoIntegration';
+import GapStandupSummarizer from './pages/GapStandupSummarizer';
+import GapWebhookIngest from './pages/GapWebhookIngest';
+import GapWebsocketEvents from './pages/GapWebsocketEvents';
+import CfAgentExecutableSpec from './pages/CfAgentExecutableSpec';
+import CfAutoRetros from './pages/CfAutoRetros';
+import CfCodeAwareSimilarity from './pages/CfCodeAwareSimilarity';
+import CfGithubSync from './pages/CfGithubSync';
+import CfPlanFromBrief from './pages/CfPlanFromBrief';
+
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   return localStorage.getItem('token') ? <>{children}</> : <Navigate to="/login" />;
 }
@@ -28,6 +50,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/insights/timeline" element={<TimelineView />} />
+        <Route path="/codex/custom-viz" element={<CodexCustomVizFeature />} />
+        <Route path="/codex/operations" element={<CodexOperationsFeature />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<PrivateRoute><Layout /></PrivateRoute>}>
           <Route index element={<Navigate to="/dashboard" />} />
@@ -49,6 +75,22 @@ export default function App() {
           <Route path="pricing" element={<PricingModelsPage />} />
           <Route path="moats" element={<MoatsPage />} />
           <Route path="custom-views" element={<CustomViewsPage />} />
+          <Route path="gap/agent-executor" element={<GapAgentExecutor />} />
+          <Route path="gap/auto-pr-from-issue" element={<GapAutoPrFromIssue />} />
+          <Route path="gap/customer-portal" element={<GapCustomerPortal />} />
+          <Route path="gap/cycle-time-explainer" element={<GapCycleTimeExplainer />} />
+          <Route path="gap/dependency-graph" element={<GapDependencyGraph />} />
+          <Route path="gap/git-integration" element={<GapGitIntegration />} />
+          <Route path="gap/keyboard-palette" element={<GapKeyboardPalette />} />
+          <Route path="gap/sso-integration" element={<GapSsoIntegration />} />
+          <Route path="gap/standup-summarizer" element={<GapStandupSummarizer />} />
+          <Route path="gap/webhook-ingest" element={<GapWebhookIngest />} />
+          <Route path="gap/websocket-events" element={<GapWebsocketEvents />} />
+          <Route path="cf/agent-executable-spec" element={<CfAgentExecutableSpec />} />
+          <Route path="cf/auto-retros" element={<CfAutoRetros />} />
+          <Route path="cf/code-aware-similarity" element={<CfCodeAwareSimilarity />} />
+          <Route path="cf/github-sync" element={<CfGithubSync />} />
+          <Route path="cf/plan-from-brief" element={<CfPlanFromBrief />} />
         </Route>
       </Routes>
     </BrowserRouter>

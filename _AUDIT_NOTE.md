@@ -55,3 +55,25 @@ Last updated: 2026-05-07
 - 2026-05-07: Added Sample Data admin page + `POST /api/admin/sample-data/:entity` (projects, team, labels, sprints, issues, comments). Smoke-tested all 6 entities returning HTTP 200; rows cleaned up. See `/Users/erolakarsu/projects/_AUDIT/apply3_logs/sample_data_saas-challengers.md`.
 - 2026-05-07: Added sample-prefill buttons to all 9 AI tabs in `frontend/src/pages/AICenterPage.tsx` (2-3 samples per tab, 25 total). Samples are tab-aware, inject synthetic Project/Sprint/Issue/Comment rows (IDs >= 900000 to avoid DB collisions) into local state and auto-select dropdowns. No backend changes. Vite production build passes (281 kB JS). See `/Users/erolakarsu/projects/_AUDIT/apply3_logs/samples_saas-challengers.md`.
 - 2026-05-07: Added Dashboard page (`/dashboard`) as first sidebar item and post-login default landing. Backend: `GET /api/dashboard/stats` (JWT) aggregates KPIs, current active sprints, audit-log activity, and issue breakdowns. Frontend: `pages/Dashboard.tsx` with KPI cards, quick actions (AI Center, Issues, Sprints, Sample Data), sprint progress bars, recent activity feed. Smoke test on port 3012 returned 200 with auth, 401 without; backend cleaned up. See `/Users/erolakarsu/projects/_AUDIT/apply3_logs/dashboard_saas-challengers.md`.
+
+## Apply pass 7 (full backlog implementation)
+
+Date: 2026-05-21.
+
+Unaddressed backlog identified: 16 gap-*/cf-* backend routes (`/api/gap-ai-*`, `/api/gap-nonai-*`, `/api/cf-*`) had complete frontend pages under `frontend/src/pages/Gap*.tsx` and `Cf*.tsx` but were NOT routed in `App.tsx` and NOT linked in `Layout.tsx` nav. The on-demand `gap_features` table created by each route was also missing from canonical `backend/db/schema.sql`.
+
+Items addressed:
+- 11 Gap features routed: `/gap/agent-executor`, `/gap/auto-pr-from-issue`, `/gap/standup-summarizer`, `/gap/cycle-time-explainer`, `/gap/dependency-graph`, `/gap/customer-portal`, `/gap/git-integration`, `/gap/keyboard-palette`, `/gap/sso-integration`, `/gap/webhook-ingest`, `/gap/websocket-events`
+- 5 Cf features routed: `/cf/agent-executable-spec`, `/cf/plan-from-brief`, `/cf/auto-retros`, `/cf/code-aware-similarity`, `/cf/github-sync`
+- Sidebar nav grouped into "Gap Features" and "Custom Features" sections (lucide-react icons only — no new deps)
+- `backend/db/schema.sql`: added canonical `CREATE TABLE IF NOT EXISTS gap_features` + `idx_gap_features_slug` (idempotent; matches the on-demand definitions already in the route files)
+
+Verification:
+- `node --check backend/server.js` → OK (server.js not modified; mounts still precede the `/api` 404 fallback at line 53)
+- `vite build` → 1553 modules, 394.72 kB JS, 33.66 kB CSS, no errors
+- All 16 backend routes were previously mounted in `server.js` lines 23–38 (pass 5/6); no new mounts required.
+
+Skipped (per constraints):
+- NEEDS-CREDS: AI endpoints stay 503 without `OPENROUTER_API_KEY` — wiring unchanged
+- TOO-RISKY: no edits to feature-page JSX/TSX bodies (only routing/nav wiring)
+- Codex/Timeline pages (`/codex/custom-viz`, `/codex/operations`, `/insights/timeline`) already routed outside Layout — left untouched
