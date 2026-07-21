@@ -1,0 +1,10 @@
+.git
+.env
+.env.*
+!.env.example
+**/node_modules
+**/dist
+coverage
+*.log
+_AUDIT_NOTE.md
+_COMPLETENESS_REVIEW.md

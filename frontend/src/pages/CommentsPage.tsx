@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api';
-import { Plus, Search, MessageSquare, X, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Search, X, Edit2, Trash2 } from 'lucide-react';
 
 interface Comment {
   id: number; issue_id: number; author_id: number | null; content: string;

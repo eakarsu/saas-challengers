@@ -1,54 +1,45 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
+project_dir="$(cd "$(dirname "$0")" && pwd)"
+cd "${project_dir}"
 
-# Kill existing processes on ports
-echo "Clearing ports 3012 and 5176..."
-lsof -ti:3012 | xargs kill -9 2>/dev/null || true
-lsof -ti:5176 | xargs kill -9 2>/dev/null || true
+env_file="${ENV_FILE:-.env}"
+if [[ ! -f "${env_file}" ]]; then echo "Missing ${env_file}; copy .env.example and provide operator values." >&2; exit 2; fi
+set -a
+source "${env_file}"
+set +a
 
-# Load environment variables
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
-fi
+: "${DATABASE_URL:?DATABASE_URL is required}"
+: "${JWT_SECRET:?JWT_SECRET is required}"
+if [[ ${#JWT_SECRET} -lt 32 ]]; then echo "JWT_SECRET must contain at least 32 characters." >&2; exit 2; fi
+if [[ "${JWT_SECRET}" =~ (generate[-_\ ]?(a|an)|replace[-_\ ]?me|change[-_\ ]?me|changeme|example[-_\ ]?secret) ]]; then echo "JWT_SECRET must be generated and cannot use an example placeholder." >&2; exit 2; fi
+if [[ "${DATABASE_URL}" =~ (replace[-_\ ]?me|change[-_\ ]?me|changeme) ]]; then echo "DATABASE_URL cannot contain an example placeholder." >&2; exit 2; fi
+if [[ ! -d backend/node_modules || ! -f frontend/dist/index.html ]]; then echo "Install dependencies and build the frontend before startup." >&2; exit 2; fi
 
-DB_NAME="momentum_db"
-DB_USER="${PGUSER:-postgres}"
+app_port="${PORT:-3012}"
+if lsof -nP -iTCP:"${app_port}" -sTCP:LISTEN >/dev/null 2>&1; then echo "Port ${app_port} is already occupied; refusing to stop another process." >&2; exit 2; fi
 
-echo "Setting up database: $DB_NAME..."
-psql -U "$DB_USER" -tc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'" | grep -q 1 || psql -U "$DB_USER" -c "CREATE DATABASE $DB_NAME"
+DATABASE_URL="${DATABASE_URL}" JWT_SECRET="${JWT_SECRET}" node -e "const pool=require('./backend/db'); pool.query('SELECT COUNT(*) FROM schema_migrations').then(()=>pool.end()).catch((error)=>{console.error('Database is not migrated:', error.message); process.exit(2)})"
 
-echo "Running schema..."
-psql -U "$DB_USER" -d "$DB_NAME" -f backend/db/schema.sql
-
-echo "Running seed..."
-psql -U "$DB_USER" -d "$DB_NAME" -f backend/db/seed.sql
-
-echo "Installing backend dependencies..."
-cd backend && npm install && cd ..
-
-echo "Installing frontend dependencies..."
-cd frontend && npm install && cd ..
-
-echo "Starting backend on port 3012..."
-(cd backend && node server.js) &
-BACKEND_PID=$!
-
-echo "Starting frontend on port 5176..."
-(cd frontend && npm run dev) &
-FRONTEND_PID=$!
-
-echo ""
-echo "Momentum is running!"
-echo "  Frontend: http://localhost:5176"
-echo "  Backend:  http://localhost:3012"
-echo "  Login:    admin@demo.com / demo123"
-echo ""
-echo "Press Ctrl+C to stop all services"
+export HOST=127.0.0.1
+export FRONTEND_DIST="${project_dir}/frontend/dist"
+node backend/server.js &
+backend_pid=$!
 
 cleanup() {
-  echo "Stopping services..."
-  kill $BACKEND_PID $FRONTEND_PID 2>/dev/null || true
-  exit 0
+  if kill -0 "${backend_pid}" 2>/dev/null; then kill -TERM "${backend_pid}"; wait "${backend_pid}" || true; fi
 }
-trap cleanup INT TERM
-wait
+trap cleanup EXIT INT TERM
+
+for _attempt in {1..30}; do
+  if curl --fail --silent "http://127.0.0.1:${app_port}/api/health" >/dev/null; then
+    echo "Governed research is ready at http://127.0.0.1:${app_port}"
+    wait "${backend_pid}"
+    exit $?
+  fi
+  if ! kill -0 "${backend_pid}" 2>/dev/null; then echo "Backend exited during readiness checks." >&2; exit 1; fi
+  sleep 1
+done
+echo "Backend did not become ready." >&2
+exit 1

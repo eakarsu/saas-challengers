@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api';
-import { Plus, Search, Users, X, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Search, X, Edit2, Trash2 } from 'lucide-react';
 
 interface Member {
   id: number; name: string; email: string; role: string; avatar_color: string;

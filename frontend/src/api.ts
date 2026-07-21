@@ -1,10 +1,13 @@
 const BASE = '/api';
 function getToken() { return localStorage.getItem('token'); }
+function getOrganizationId() { return localStorage.getItem('organizationId'); }
 
 export async function apiFetch(path: string, options: RequestInit = {}) {
   const token = getToken();
   const headers: Record<string, string> = { 'Content-Type': 'application/json', ...(options.headers as Record<string, string> || {}) };
   if (token) headers['Authorization'] = `Bearer ${token}`;
+  const organizationId = getOrganizationId();
+  if (organizationId) headers['X-Organization-ID'] = organizationId;
   const res = await fetch(`${BASE}${path}`, { ...options, headers });
   if (!res.ok) { const err = await res.json().catch(() => ({ error: res.statusText })); throw new Error(err.error || res.statusText); }
   return res.json();
@@ -12,6 +15,16 @@ export async function apiFetch(path: string, options: RequestInit = {}) {
 
 export const api = {
   login: (email: string, password: string) => apiFetch('/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) }),
+  register: (data: unknown) => apiFetch('/auth/register', { method: 'POST', body: JSON.stringify(data) }),
+  getAssessments: () => apiFetch('/research/assessments'),
+  getAssessment: (id: number) => apiFetch(`/research/assessments/${id}`),
+  createAssessment: (data: unknown) => apiFetch('/research/assessments', { method: 'POST', body: JSON.stringify(data) }),
+  addEvidence: (id: number, data: unknown) => apiFetch(`/research/assessments/${id}/evidence`, { method: 'POST', body: JSON.stringify(data) }),
+  submitAssessment: (id: number, expectedVersion: number) => apiFetch(`/research/assessments/${id}/submit`, { method: 'POST', body: JSON.stringify({ expectedVersion }) }),
+  decideAssessment: (id: number, data: unknown) => apiFetch(`/research/assessments/${id}/decision`, { method: 'POST', body: JSON.stringify(data) }),
+  createInvitation: (data: unknown) => apiFetch('/research/invitations', { method: 'POST', body: JSON.stringify(data) }),
+  getResearchAudit: () => apiFetch('/research/audit'),
+  getResearchOperations: () => apiFetch('/research/operations'),
   getProjects: () => apiFetch('/projects'),
   getProject: (id: number) => apiFetch(`/projects/${id}`),
   createProject: (d: unknown) => apiFetch('/projects', { method: 'POST', body: JSON.stringify(d) }),

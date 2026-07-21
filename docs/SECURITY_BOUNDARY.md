@@ -1,0 +1,9 @@
+# Security and AI boundary
+
+The executable product has no generic AI route. It does not transmit hypotheses, source excerpts, identities, or economic inputs to an LLM provider. Recommendation logic is deterministic integer arithmetic in `backend/services/scoring.js`, versioned as `cost-v1`, and remains advisory: an independent human reviewer owns the final decision.
+
+Authentication uses bcrypt cost 12 and 15-minute HS256 access tokens. The token carries only the user ID; active tenant membership and role are loaded from PostgreSQL on every protected request. The organization header never grants membership by itself. Admins create one-time SHA-256-hashed invitations; raw invitation tokens are returned once and expire after 24 hours.
+
+Input sizes, enums, strings, dates, URLs, integer ranges, idempotency keys, and optimistic versions are bounded. Evidence URLs must be credential-free HTTPS and are stored, not fetched, so they do not create a server-side request-forgery path. Request bodies and authorization headers are not logged. Helmet, explicit CORS allowlists, body limits, authentication throttling, request IDs, safe 5xx responses, and graceful shutdown are enabled. Proxy trust defaults off and must be explicitly enabled only behind an operator-controlled proxy. Audit exports recompute sequence, previous-hash, and event-hash integrity.
+
+Residual external gates include TLS/ingress and database hardening, secret manager integration and rotation, email/private invitation delivery, SSO/MFA if required, privacy and evidence licensing review, penetration testing, dependency and base-image monitoring, centralized log access controls, incident response, and deployment-specific backup/retention policy. Public self-service organization creation may be disabled at the ingress if the operator requires invitation-only tenancy.

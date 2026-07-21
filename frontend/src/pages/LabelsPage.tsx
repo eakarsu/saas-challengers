@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api';
-import { Plus, Search, Tag, X, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Search, X, Edit2, Trash2 } from 'lucide-react';
 
 interface Label {
   id: number; name: string; color: string; description: string;
