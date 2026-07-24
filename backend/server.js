@@ -32,6 +32,7 @@ app.use(express.json({ limit: '256kb', strict: true }));
 const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: config.nodeEnv === 'test' ? 1000 : 20, standardHeaders: 'draft-7', legacyHeaders: false });
 app.use('/api/auth', authLimiter, require('./routes/auth'));
 app.use('/api/research', require('./routes/research'));
+app.use('/api/ai/recommendation', require('./middleware/runtime-auth'), require('./routes/runtime-ai'));
 
 app.get('/api/health', async (_req, res, next) => {
   try {

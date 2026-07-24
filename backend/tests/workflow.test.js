@@ -105,6 +105,7 @@ test('audit chain and database guards reject evidence tampering', async () => {
 
 test('legacy demo and generic AI routes are not executable', async () => {
   await request(app).post('/api/ai/issue-triage').send({}).expect(404);
+  await request(app).post('/api/ai/recommendation').send({ prompt: 'test' }).expect(401);
   await request(app).post('/api/admin/seed').send({}).expect(404);
   await request(app).post('/api/gap-ai-agent-executor/run').send({}).expect(404);
 });

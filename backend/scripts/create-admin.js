@@ -26,6 +26,8 @@ async function createAdmin() {
         'INSERT INTO users(email,password_hash,name) VALUES($1,$2,$3) RETURNING id',
         [email, await bcrypt.hash(password, 12), name],
       )).rows[0];
+    } else {
+      await client.query('UPDATE users SET password_hash=$1,name=$2,is_active=TRUE WHERE id=$3', [await bcrypt.hash(password, 12), name, user.id]);
     }
     let organization = (await client.query(
       'SELECT o.id FROM organizations o JOIN organization_members m ON m.organization_id=o.id WHERE m.user_id=$1 AND m.role=$2 LIMIT 1',
