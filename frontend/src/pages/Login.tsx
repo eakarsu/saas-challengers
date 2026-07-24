@@ -18,7 +18,7 @@ export default function Login() {
     } catch (err) { setError('Invalid credentials'); }
   };
 
-  const demoLogin = () => { setEmail('admin@demo.com'); setPassword('demo123'); setTimeout(() => document.getElementById('login-form')?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true })), 50); };
+  const demoLogin = () => { setEmail(import.meta.env.VITE_DEMO_EMAIL || ''); setPassword(import.meta.env.VITE_DEMO_PASSWORD || ''); setTimeout(() => document.getElementById('login-form')?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true })), 50); };
 
   return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
