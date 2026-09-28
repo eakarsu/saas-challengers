@@ -18,7 +18,11 @@ export default function Login() {
     } catch (err) { setError('Invalid credentials'); }
   };
 
-  const demoLogin = () => { setEmail(import.meta.env.VITE_DEMO_EMAIL || ''); setPassword(import.meta.env.VITE_DEMO_PASSWORD || ''); setTimeout(() => document.getElementById('login-form')?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true })), 50); };
+  const fillDemoCredentials = () => {
+    setEmail(import.meta.env.VITE_DEMO_EMAIL || '');
+    setPassword(import.meta.env.VITE_DEMO_PASSWORD || '');
+    setError('');
+  };
 
   return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
@@ -46,7 +50,7 @@ export default function Login() {
             <button type="submit" className="w-full bg-violet-600 hover:bg-violet-700 text-white py-2.5 rounded-lg font-medium transition-colors">Sign In</button>
           </form>
           <div className="mt-4">
-            <button onClick={demoLogin} className="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 py-2.5 rounded-lg text-sm transition-colors">Demo Login</button>
+            <button type="button" onClick={fillDemoCredentials} className="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 py-2.5 rounded-lg text-sm transition-colors">Auto Fill Demo Credentials</button>
           </div>
         </div>
       </div>

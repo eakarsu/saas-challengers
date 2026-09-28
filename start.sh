@@ -74,7 +74,7 @@ set +a
 if [[ ${#JWT_SECRET} -lt 32 ]]; then echo "JWT_SECRET must contain at least 32 characters." >&2; exit 2; fi
 if [[ "${JWT_SECRET}" =~ (generate[-_\ ]?(a|an)|replace[-_\ ]?me|change[-_\ ]?me|changeme|example[-_\ ]?secret) ]]; then echo "JWT_SECRET must be generated and cannot use an example placeholder." >&2; exit 2; fi
 if [[ "${DATABASE_URL}" =~ (replace[-_\ ]?me|change[-_\ ]?me|changeme) ]]; then echo "DATABASE_URL cannot contain an example placeholder." >&2; exit 2; fi
-if [[ ! -d backend/node_modules || ! -d frontend/node_modules || ! -f frontend/dist/index.html ]]; then echo "Install dependencies and build the frontend before startup." >&2; exit 2; fi
+if [[ ! -d backend/node_modules || ! -d frontend/node_modules ]]; then echo "Install dependencies before startup." >&2; exit 2; fi
 
 app_port="${PORT:-3012}"
 ui_port="${FRONTEND_PORT:?FRONTEND_PORT is required}"
@@ -85,6 +85,9 @@ done
 
 node backend/db/migrate.js
 npm --prefix backend run create-admin
+export VITE_DEMO_EMAIL="$PROVISION_ADMIN_EMAIL"
+export VITE_DEMO_PASSWORD="$PROVISION_ADMIN_PASSWORD"
+npm --prefix frontend run build
 DATABASE_URL="${DATABASE_URL}" JWT_SECRET="${JWT_SECRET}" node -e "const pool=require('./backend/db'); pool.query('SELECT COUNT(*) FROM schema_migrations').then(()=>pool.end()).catch((error)=>{console.error('Database is not migrated:', error.message); process.exit(2)})"
 
 export HOST=127.0.0.1
