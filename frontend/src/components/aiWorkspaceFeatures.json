@@ -1,0 +1,114 @@
+[
+  {
+    "name": "CfAgentExecutableSpec",
+    "id": "cf-agent-executable-spec",
+    "title": "Agent-Executable Issue Spec",
+    "description": "Prepare a professional advisory report for agent-executable issue spec using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfAutoRetros",
+    "id": "cf-auto-retros",
+    "title": "Auto-Generated Sprint Retros",
+    "description": "Prepare a professional advisory report for auto-generated sprint retros using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfCodeAwareSimilarity",
+    "id": "cf-code-aware-similarity",
+    "title": "Code-Aware Similarity Search",
+    "description": "Prepare a professional advisory report for code-aware similarity search using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfGithubSync",
+    "id": "cf-github-sync",
+    "title": "Zero-Config GitHub Sync",
+    "description": "Prepare a professional advisory report for zero-config github sync using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "CfPlanFromBrief",
+    "id": "cf-plan-from-brief",
+    "title": "Generative Plan From One-Line Brief",
+    "description": "Prepare a professional advisory report for generative plan from one-line brief using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapAgentExecutor",
+    "id": "gap-ai-agent-executor",
+    "title": "Issue → Agent Executor",
+    "description": "Prepare a professional advisory report for issue → agent executor using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapAutoPrFromIssue",
+    "id": "gap-ai-auto-pr-from-issue",
+    "title": "Auto-PR From Issue",
+    "description": "Prepare a professional advisory report for auto-pr from issue using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapCustomerPortal",
+    "id": "gap-nonai-customer-portal",
+    "title": "Public Customer Portal",
+    "description": "Prepare a professional advisory report for public customer portal using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapCycleTimeExplainer",
+    "id": "gap-ai-cycle-time-explainer",
+    "title": "Cycle Time Explainer",
+    "description": "Prepare a professional advisory report for cycle time explainer using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapDependencyGraph",
+    "id": "gap-ai-dependency-graph",
+    "title": "Dependency Graph Builder",
+    "description": "Prepare a professional advisory report for dependency graph builder using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapGitIntegration",
+    "id": "gap-nonai-git-integration",
+    "title": "Git Integration Tables",
+    "description": "Prepare a professional advisory report for git integration tables using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapKeyboardPalette",
+    "id": "gap-nonai-keyboard-palette",
+    "title": "Keyboard Shortcut Palette",
+    "description": "Prepare a professional advisory report for keyboard shortcut palette using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapSsoIntegration",
+    "id": "gap-nonai-sso-integration",
+    "title": "SSO Integration",
+    "description": "Prepare a professional advisory report for sso integration using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapStandupSummarizer",
+    "id": "gap-ai-standup-summarizer",
+    "title": "Standup Summarizer",
+    "description": "Prepare a professional advisory report for standup summarizer using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapWebhookIngest",
+    "id": "gap-nonai-webhook-ingest",
+    "title": "GitHub / Slack Webhook Ingest",
+    "description": "Prepare a professional advisory report for github / slack webhook ingest using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  },
+  {
+    "name": "GapWebsocketEvents",
+    "id": "gap-nonai-websocket-events",
+    "title": "Real-Time Websocket Events",
+    "description": "Prepare a professional advisory report for real-time websocket events using the brief and evidence you provide. Review the findings, assumptions, and action plan before applying changes.",
+    "samples": []
+  }
+]

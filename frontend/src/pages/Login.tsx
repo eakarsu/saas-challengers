@@ -19,6 +19,10 @@ export default function Login() {
   };
 
   const fillDemoCredentials = () => {
+    if (!import.meta.env.VITE_DEMO_EMAIL || !import.meta.env.VITE_DEMO_PASSWORD) {
+      setError('Demo credentials are not configured for this app.');
+      return;
+    }
     setEmail(import.meta.env.VITE_DEMO_EMAIL || '');
     setPassword(import.meta.env.VITE_DEMO_PASSWORD || '');
     setError('');
@@ -50,7 +54,7 @@ export default function Login() {
             <button type="submit" className="w-full bg-violet-600 hover:bg-violet-700 text-white py-2.5 rounded-lg font-medium transition-colors">Sign In</button>
           </form>
           <div className="mt-4">
-            <button type="button" onClick={fillDemoCredentials} className="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 py-2.5 rounded-lg text-sm transition-colors">Auto Fill Demo Credentials</button>
+            <button type="button" onClick={fillDemoCredentials} className="w-full bg-gray-800 hover:bg-gray-700 text-gray-300 py-2.5 rounded-lg text-sm transition-colors">Fill demo credentials</button>
           </div>
         </div>
       </div>

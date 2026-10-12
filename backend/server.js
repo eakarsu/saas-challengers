@@ -33,6 +33,39 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: config.nodeEnv 
 app.use('/api/auth', authLimiter, require('./routes/auth'));
 app.use('/api/research', require('./routes/research'));
 app.use('/api/ai/recommendation', require('./middleware/runtime-auth'), require('./routes/runtime-ai'));
+for (const [path, route] of [
+  ['projects', 'projects'], ['issues', 'issues'], ['sprints', 'sprints'],
+  ['team', 'team'], ['comments', 'comments'], ['labels', 'labels'],
+  ['ai', 'ai'], ['utils', 'utils'], ['dashboard', 'dashboard'],
+  ['admin', 'sample_data'], ['incumbents', 'incumbents'],
+  ['challengers', 'challengers'], ['pricing', 'pricing'],
+  ['displacement', 'displacement'], ['switching', 'switching'],
+  ['moats', 'moats'], ['custom-views', 'customViews'],
+  ['gap-ai-agent-executor', 'gap-ai-agent-executor'],
+  ['gap-ai-auto-pr-from-issue', 'gap-ai-auto-pr-from-issue'],
+  ['gap-ai-cycle-time-explainer', 'gap-ai-cycle-time-explainer'],
+  ['gap-ai-dependency-graph', 'gap-ai-dependency-graph'],
+  ['gap-ai-standup-summarizer', 'gap-ai-standup-summarizer'],
+  ['gap-nonai-customer-portal', 'gap-nonai-customer-portal'],
+  ['gap-nonai-git-integration', 'gap-nonai-git-integration'],
+  ['gap-nonai-keyboard-palette', 'gap-nonai-keyboard-palette'],
+  ['gap-nonai-sso-integration', 'gap-nonai-sso-integration'],
+  ['gap-nonai-webhook-ingest', 'gap-nonai-webhook-ingest'],
+  ['gap-nonai-websocket-events', 'gap-nonai-websocket-events'],
+  ['cf-agent-executable-spec', 'cf-agent-executable-spec'],
+  ['cf-auto-retros', 'cf-auto-retros'],
+  ['cf-code-aware-similarity', 'cf-code-aware-similarity'],
+  ['cf-github-sync', 'cf-github-sync'],
+  ['cf-plan-from-brief', 'cf-plan-from-brief'],
+]) app.use(`/api/${path}`, require(`./routes/${route}`));
+
+// The report workspace must be reachable before the API 404 handler.
+const aiWorkspaceSupport = require('./aiWorkspaceAdapters.cjs');
+app.use('/api/report-workspace', require('./aiWorkspace.cjs').createAIWorkspaceRouter({
+  pool, authenticateToken: require('./middleware/auth').authenticate,
+  aiRateLimiter: aiWorkspaceSupport.createWorkspaceLimiter(),
+  features: require('./aiWorkspaceFeatures.json'),
+}));
 
 app.get('/api/health', async (_req, res, next) => {
   try {
